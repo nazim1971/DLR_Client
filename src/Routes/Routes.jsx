@@ -5,12 +5,12 @@ import Contect from "../components/Navber/Contect";
 import About from "../components/Navber/About";
 import AddProduct from "../components/Navber/AddProduct";
 import Releases from "../components/Sidebar/SideBarComponent/Releases";
-import Artists from "../components/Artists/Artists";
-import Labels from "../components/Sidebar/SideBarComponent/Labels";
 import Wallet from "../components/Sidebar/SideBarComponent/Wallet";
 import Statistics from "../components/Sidebar/SideBarComponent/Statistics";
 import Account from "../components/Sidebar/SideBarComponent/Account";
 import Support from "../components/Sidebar/SideBarComponent/Support";
+import Artists from "../components/Artists/Artists";
+import Labels from "../components/Label/Labels";
 const routes = createBrowserRouter([
     {
       path: "/",

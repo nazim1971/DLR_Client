@@ -1,4 +1,4 @@
-import { FaRegUserCircle } from "react-icons/fa";
+
 import AllArtists from "./AllArtists";
 
 
