@@ -10,7 +10,6 @@ const Root = () => {
             <div className="bg-white  rounded-3xl border w-full  ">
             <Outlet/>
             </div>
-          
         </div>
     );
 };

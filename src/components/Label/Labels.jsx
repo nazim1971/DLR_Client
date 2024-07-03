@@ -1,6 +1,24 @@
+import { useQuery } from "@tanstack/react-query";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 import AllLabel from "./AllLabel";
+import LabelModal from "../../Modal/LabelModal";
 
 const Labels = () => {
+
+  const axiosPublic = useAxiosPublic();
+  //get all label
+  const {data: label=[], refetch} = useQuery({
+ queryKey: ['allLabel'],
+ queryFn: async()=>{
+  const {data} = await axiosPublic('/v1/label/allLabel')
+  return data;
+  
+ }
+  })
+  refetch();
+  const handleShowModal = () => {
+      document.getElementById('my_modal_1').showModal();
+    };
     return (
         <div className="h-full">
             
@@ -15,13 +33,13 @@ const Labels = () => {
        <div className="w-2/3 h-full flex flex-col overflow-y-auto p-3" >
             <div className="flex justify-between my-7">
               <input type="text" placeholder="Type & Enter toSearch" className="input input-primary" name="" id="" />
-              <button className="btn bg-black text-white rounded-3xl">Create</button>
+              <button onClick={() => handleShowModal()} className="btn bg-black text-white rounded-3xl">Create</button>
             </div>
             <div className="bg-stone-300 flex justify-between p-3 rounded-3xl font-semibold">
               <p>Profile</p>
               <p>Releases</p>
             </div>
-             <AllLabel/>
+             <AllLabel label={label} refetch={refetch} />
 
         </div>
 
@@ -33,7 +51,7 @@ const Labels = () => {
        </div>
        </div>
 
-       
+       <LabelModal name={"Label"} label={label} title={"Add Label"} refetch={refetch} />
       </div>
     );
 };
