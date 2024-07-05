@@ -2,7 +2,6 @@ import { useContext, useState } from "react";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../Auth/AuthProvider";
-import { imageUpload } from "../../Hooks/imageUpload";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { TbFidgetSpinner } from "react-icons/tb";
 import { Link } from "react-router-dom";
@@ -14,8 +13,7 @@ const Register = () => {
     const { loader,setLoader } = useContext(AuthContext);
   // show password
       const [pass, setPass] = useState(false);
-    //   const location = useLocation();
-    // const navigate = useNavigate();
+ 
   
     const {
       register,
@@ -92,7 +90,7 @@ const Register = () => {
     return (
         <div className="h-full p-10">
         
-             <div className="flex h-full p-4 overflow-y-auto w-full border mx-auto   rounded-lg shadow-lg  lg:max-w-4xl">
+             <div className="flex h-full  p-4 overflow-y-auto w-full border mx-auto   rounded-lg shadow-lg  lg:max-w-4xl">
             
         
             <div className="w-full px-6 py-8 md:px-8 lg:w-1/2 border">
