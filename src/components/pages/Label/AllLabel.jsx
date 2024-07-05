@@ -1,8 +1,10 @@
 import { MdDeleteForever, MdUpdate } from "react-icons/md";
-import UpdateLabelModal from "../../Modal/UpdateLabelModal";
 import { useState } from "react";
-import useAxiosPublic from "../Hooks/useAxiosPublic";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import UpdateLabelModal from "../../../Modal/UpdateLabelModal";
+
+
 const AllLabel = ({label, refetch}) => {
     const axiosPublic = useAxiosPublic();
     const [id, setId] = useState({});

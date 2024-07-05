@@ -1,5 +1,6 @@
-
 import AllArtists from "./AllArtists";
+
+
 
 
 const Artists = () => {

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 
 
@@ -15,8 +16,8 @@ const Test = () => {
            <Sidebar/>
            </div>
            <div className="flex justify-center mt-4">
-            <button className="btn bg-red-600  text-center w-52 " >
-                Upgrade  to pro
+            <button  className="btn bg-red-600  text-center w-52 " >
+               <Link to={'/login'} >Login</Link>
             </button>
            </div>
         </div>

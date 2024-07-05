@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import useAxiosPublic from "../Hooks/useAxiosPublic";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import AllLabel from "./AllLabel";
-import LabelModal from "../../Modal/LabelModal";
-
+import LabelModal from "../../../Modal/LabelModal";
 const Labels = () => {
 
   const axiosPublic = useAxiosPublic();
