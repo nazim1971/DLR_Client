@@ -2,39 +2,48 @@ import { useState } from "react";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { useForm } from "react-hook-form";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 
 const Login = () => {
 
 
     const axiosPublic = useAxiosPublic();
-    // const { login ,googleLogin} = useAuth() ;
-    
     // show password
     const [pass, setPass] = useState(false);
-    // const location = useLocation();
-//   const navigate = useNavigate();
+    const location = useLocation();
+  const navigate = useNavigate();
   
   const {
     register,
     handleSubmit
   } = useForm()
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     const {email,password} = data
-  
-    // login user
-    // login(email, password)
-    //   .then(() => {
-    //     toast.success("Login Successfully");
-       
-    //     navigate(location?.state ? location.state : "/");
-    //   })
-    //   .catch((err) => {
-    //     if (err.code === "auth/invalid-credential") {
-    //       toast.warning("Invalid user/password");
-    //     }
-    //   });
+    try {
+      
+        const userInfo = {
+          userEmail : email,
+          password : password,
+        }
+        axios.defaults.withCredentials = true
+        //2. User Registration
+        await axiosPublic.post("/v01/user/login", userInfo).then((res) => {
+          console.log("Registerd Data",res.data.Status);
+        if (res.data.Status === "Success") {
+          toast.success("Login Successfully");
+          navigate(location?.state ? location.state : "/");
+        }
+        else {
+            toast.error(res.data.Status)
+        }
+      })
+      } catch (err) {
+        console.log(err)
+        toast.error(err.message)
+      }
   }
 
 

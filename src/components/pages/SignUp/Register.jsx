@@ -4,7 +4,9 @@ import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../Auth/AuthProvider";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { TbFidgetSpinner } from "react-icons/tb";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { imageUpload } from "../../Hooks/imageUpload";
+import toast from "react-hot-toast";
 
 
 const Register = () => {
@@ -13,6 +15,7 @@ const Register = () => {
     const { loader,setLoader } = useContext(AuthContext);
   // show password
       const [pass, setPass] = useState(false);
+      const navigate = useNavigate();
  
   
     const {
@@ -23,7 +26,7 @@ const Register = () => {
     } = useForm()
     const onSubmit =async (data) => {
      const image = data.image[0]
-      const {email,password,name,role} = data
+      const {email,password,name} = data
   
       console.log(data);
       // password validation
@@ -50,39 +53,31 @@ const Register = () => {
       return
     }
     
-        // try {
-        //   setLoader(true)
-        //   // 1. Upload image and get image url
-        //   const image_url = await imageUpload(image)
-          
-        //   //2. User Registration
-        // //    await createUser(email, password)
-          
-        //   // 3. Save username and photo in firebase
-        // //   await updateUserProfile(name, image_url)
-        //   .then(async()=>{
-        //     // create user entry in the DB
-        //     const  userInfo = {
-        //       name: name,
-        //       email: email,
-        //       role: role,
-        //       image: image_url
-        //     }
-        //    await axiosPublic.post('/users',userInfo)
-        //     .then(res=>{
-        //       if (res.data.insertedId) {
-        //         reset();
-        //         toast.success('Signup Successful')
-        //         navigate(location?.state ? location.state : "/");
-        //     }
-        //     })
-        //   })
-          
-          
-        // } catch (err) {
-        //   console.log(err)
-        //   toast.error(err.message)
-        // }
+        try {
+          setLoader(true)
+          // 1. Upload image and get image url
+          const image_url = await imageUpload(image)
+          setLoader(false);
+
+          const userInfo = {
+            userName : name,
+            userEmail : email,
+            password : password,
+            userPhotoUrl: image_url
+          }
+          //2. User Registration
+          await axiosPublic.post("/v01/user/addUser", userInfo).then((res) => {
+            console.log("Registerd Data",res.data);
+          if (res.data.insertId) {
+            reset();
+            toast.success('Signup Successful')
+            navigate(location?.state ? location.state : "/");
+          }
+        })
+        } catch (err) {
+          console.log(err)
+          toast.error(err.message)
+        }
   
     }
 
@@ -147,14 +142,6 @@ const Register = () => {
                     </span>
                   )}
                     </div>
-                </div>
-                <div className="mt-4">
-                <label className="block mb-2 text-sm font-medium " >Select role</label>
-                <select defaultValue={""} {...register("role",{required: true})} >
-                <option  value="" disabled>Select a role</option>
-                  <option value="user">User</option>
-                  <option value="seller">Seller</option>
-                </select>
                 </div>
         
                 <div className="mt-6">
