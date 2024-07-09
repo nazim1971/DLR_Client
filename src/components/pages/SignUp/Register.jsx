@@ -62,7 +62,7 @@ const Register = () => {
           if (res.data.insertId) {
             reset();
             toast.success('Signup Successful')
-            navigate( "/");
+            navigate( "/login");
           }
         })
         } catch (err) {

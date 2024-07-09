@@ -27,6 +27,7 @@ const Login = () => {
         //2. User Registration
         const res = await login(userInfo);
         if (res?.Status === "Success") {
+          console.log(res.Status);
             navigate( "/");
           }
          
