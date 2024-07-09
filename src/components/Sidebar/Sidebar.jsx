@@ -1,9 +1,8 @@
-import { useState } from "react";
+
 import { NavLink } from "react-router-dom";
 
 
 const Sidebar = () => {
-    const [isActive, setIsActive] = useState(false);
 
     const navLinks = [
         { path: '/', label: 'Home' },
@@ -22,7 +21,9 @@ const Sidebar = () => {
            {
                 navLinks.map(i=> 
                     
-                        <NavLink className={ `p-3 rounded ${isActive === i.path ? ' bg-red-400  ' : '' }  `} key={i.path} onClick={() => setIsActive(i.path)} to={i.path}>{i.label} </NavLink>
+                        <NavLink className={({ isActive }) =>
+                            `block text-white ${isActive ? 'bg-red-500 ' : ''}`
+                        } key={i.path} to={i.path}>{i.label} </NavLink>
                     
                 )
             }

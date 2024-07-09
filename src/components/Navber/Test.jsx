@@ -1,8 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
-
+import useAuth from "../Hooks/useAuth";
 
 const Test = () => {
+    const nagivate = useNavigate();
+
+    const {user, logout}  = useAuth();
+
+    const handleLogout =async ()=>{
+    await logout();
+    nagivate('/login');
+    }
+
+
     return (
         <div className="w-1/3 h-full p-3 text-black flex flex-col  ">
           
@@ -16,9 +26,18 @@ const Test = () => {
            <Sidebar/>
            </div>
            <div className="flex justify-center mt-4">
-            <button  className="btn bg-red-600  text-center w-52 " >
-               <Link to={'/login'} >Login</Link>
-            </button>
+           {
+            user?
+            <button onClick={handleLogout} className="btn bg-red-600  text-center w-52 " >
+            
+            Logout
+         </button>
+             : <Link to={'/login'} > <button  className="btn bg-red-600  text-center w-52 " >
+            
+            Login
+         </button></Link> 
+           }
+           
            </div>
         </div>
     );

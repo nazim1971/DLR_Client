@@ -13,29 +13,63 @@ import Artists from "../components/pages/Artists/Artists";
 import Labels from "../components/pages/Label/Labels";
 import Login from "../components/pages/SignUp/Login";
 import Register from "../components/pages/SignUp/Register";
+import Private from "./Private";
+import Error from "./Error";
 
 
 const routes = createBrowserRouter([
     {
       path: "/",
-      element: <Root/>,
+      element: <Private><Root/></Private>,
+       errorElement: <Error/>  ,
       children: [
         {
           path: '/',
-          element: <Home/>
+          element: <Private><Home/></Private>
         },
        {
         path: '/contect',
-        element: <Contect/>
+        element: <Private><Contect/></Private>
        },
        {
         path: '/about',
-        element: <About/>
+        element: <Private><About/></Private>
        },
        {
         path: '/addProduct',
         element: <AddProduct/>
        },
+       // sidebar Menu
+       {
+        path: '/releases',
+        element: <Private><Releases/></Private>
+       },
+       {
+        path: '/artists',
+        element: <Private><Artists/></Private>
+       },
+       {
+        path: '/labels',
+        element: <Private><Labels/></Private>
+       },
+       {
+        path: '/wallet',
+        element: <Private><Wallet/></Private>
+       },
+       {
+        path: '/statistics',
+        element: <Private><Statistics/></Private>
+       },
+       {
+        path: '/account',
+        element: <Private><Account/></Private>
+       },
+       {
+        path: '/support',
+        element: <Private><Support/></Private>
+       }
+      ]
+    },
        {
         path: '/login',
         element: <Login/>
@@ -43,38 +77,7 @@ const routes = createBrowserRouter([
        {
         path: '/register',
         element: <Register/>
-       },
-       // sidebar Menu
-       {
-        path: '/releases',
-        element: <Releases/>
-       },
-       {
-        path: '/artists',
-        element: <Artists/>
-       },
-       {
-        path: '/labels',
-        element: <Labels/>
-       },
-       {
-        path: '/wallet',
-        element: <Wallet/>
-       },
-       {
-        path: '/statistics',
-        element: <Statistics/>
-       },
-       {
-        path: '/account',
-        element: <Account/>
-       },
-       {
-        path: '/support',
-        element: <Support/>
        }
-      ]
-    },
   ]);
 
 export default routes;

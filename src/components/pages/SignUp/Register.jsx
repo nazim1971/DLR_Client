@@ -1,18 +1,16 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import { useForm } from "react-hook-form";
-import { AuthContext } from "../../../Auth/AuthProvider";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { TbFidgetSpinner } from "react-icons/tb";
 import { Link, useNavigate } from "react-router-dom";
-import { imageUpload } from "../../Hooks/imageUpload";
 import toast from "react-hot-toast";
+import useAuth from "../../Hooks/useAuth";
 
 
 const Register = () => {
 
+  const {user} = useAuth();
     const axiosPublic = useAxiosPublic()
-    const { loader,setLoader } = useContext(AuthContext);
   // show password
       const [pass, setPass] = useState(false);
       const navigate = useNavigate();
@@ -25,7 +23,6 @@ const Register = () => {
       setError, reset
     } = useForm()
     const onSubmit =async (data) => {
-     const image = data.image[0]
       const {email,password,name} = data
   
       console.log(data);
@@ -54,43 +51,39 @@ const Register = () => {
     }
     
         try {
-          setLoader(true)
-          // 1. Upload image and get image url
-          const image_url = await imageUpload(image)
-          setLoader(false);
-
           const userInfo = {
             userName : name,
             userEmail : email,
-            password : password,
-            userPhotoUrl: image_url
+            password : password
           }
           //2. User Registration
-          await axiosPublic.post("/v01/user/addUser", userInfo).then((res) => {
+          await axiosPublic.post("/v1/user/addUser", userInfo).then((res) => {
             console.log("Registerd Data",res.data);
           if (res.data.insertId) {
             reset();
             toast.success('Signup Successful')
-            navigate(location?.state ? location.state : "/");
+            navigate( "/");
           }
         })
         } catch (err) {
           console.log(err)
-          toast.error(err.message)
+          toast.error(err.response
+            .data)
         }
   
     }
-
+   
+    if(user) navigate('/')
 
     return (
-        <div className="h-full p-10">
+        <div className="my-10">
         
-             <div className="flex h-full  p-4 overflow-y-auto w-full border mx-auto   rounded-lg shadow-lg  lg:max-w-4xl">
+             <div className="flex h-full   overflow-y-auto w-full border mx-auto   rounded-lg shadow-lg  lg:max-w-4xl p-10">
             
         
-            <div className="w-full px-6 py-8 md:px-8 lg:w-1/2 border">
+            <div className="w-full px-6 py-8 md:px-8 lg:w-1/2 border rounded-xl">
                 <div className="flex justify-center mx-auto">
-                    <img className="w-auto h-10 sm:h-12" src="https://i.ibb.co/Z88qpcZ/MED-NUST-removebg-preview.png" alt="" />
+                <h4 className='font-semibold bg-red-400 p-2 rounded-2xl text-white'>DLR</h4>
                 </div>
         
                 <p className="mt-3 text-xl text-center ">
@@ -109,16 +102,7 @@ const Register = () => {
                     {...register("email",{required: true})}
                      className="block w-full px-4 py-2   border rounded-lg  focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300" type="email" />
                 </div>
-                <div className="mt-4">
-                    <label className="block mb-2 text-sm font-medium " >Select Image</label>
-                    <input
-                    placeholder="Photo Url"
-                    {...register("image",{required: true})}
-                     className="block w-full px-4 py-2   border rounded-lg  focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300" type="file" 
-                     accept="image/*"
-                     />
-                </div>
-        
+               
                 <div className="mt-4">
                     <div className="flex justify-between">
                         <label className="block mb-2 text-sm font-medium " >Password</label>
@@ -146,11 +130,7 @@ const Register = () => {
         
                 <div className="mt-6">
                     <button type="submit" className="w-full btn btn-primary px-6 py-3 text-sm font-medium tracking-wide  capitalize transition-colors duration-300 transform  rounded-lg  focus:outline-none focus:ring focus:ring-gray-300 focus:ring-opacity-50">
-                        {
-                          loader ? <TbFidgetSpinner className="animate-spin m-auto" />
-                          :
-                          'Continue'
-                        }
+                    Continue
                     </button>
                 </div>
                 </form>

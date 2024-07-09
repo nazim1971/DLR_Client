@@ -5,7 +5,6 @@ import { useContext } from "react";
 import toast from "react-hot-toast";
 import { AuthContext } from "../Auth/AuthProvider";
 import { TbFidgetSpinner } from "react-icons/tb";
-import LoadingSpinner from "../components/Common/LoadingSpiner";
 
 
 const UpdateLabelModal = ({id,refetch,title,name}) => {
@@ -19,33 +18,32 @@ const UpdateLabelModal = ({id,refetch,title,name}) => {
        // Initialize image_url as an empty string
       const { labelName } = data;
       try {
-        let image_url = id.photoUrl || "";
-       if(image !== image_url) setLoader(true)
+        let image_url = id?.photoUrl || "";
+      //  if(image !== image_url) setLoader(true)
         // 1. Upload image and get image url
        if(image){
         image_url = await imageUpload(image);
-        
+        setLoader(false)
        }
         
         const labelInfo = {
           labelName,
           photoUrl: image_url
         };
-        await axiosPublic.put(`/v1/label/updateLabel/${id.id}`, labelInfo).then((res) => {
+        await axiosPublic.put(`/v1/label/updateLabel/${id?.id}`, labelInfo).then((res) => {
             console.log(res.data);
           if (res.data.affectedRows > 0) {
             toast.success("update the label succesfully");
             document.getElementById("my_modal_2").close();
             refetch();
-            setLoader(false)
+            
             reset()
           }
         });
       } catch (err) {
-        toast.error(err.message);
+        toast.error('Update error', err.message);
       }
     };
-    if(!id) <LoadingSpinner/>
     return (
         <>
         <dialog id="my_modal_2" className="modal">
@@ -56,7 +54,7 @@ const UpdateLabelModal = ({id,refetch,title,name}) => {
               </div>
               <div className="mt-4">
                 <label className="block mb-2 text-sm font-medium ">{name} </label>
-                <input defaultValue={id.labelName}
+                <input defaultValue={id?.labelName}
                   {...register("labelName", { required: true })}
                   className="block w-full px-4 py-2   border rounded-lg  focus:border-blue-400 focus:ring-opacity-40  focus:outline-none focus:ring focus:ring-blue-300"
                   type="text"

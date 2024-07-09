@@ -14,7 +14,6 @@ const Labels = () => {
   
  }
   })
-  refetch();
   const handleShowModal = () => {
       document.getElementById('my_modal_1').showModal();
     };
@@ -50,7 +49,7 @@ const Labels = () => {
        </div>
        </div>
 
-       <LabelModal name={"Label"} label={label} title={"Add Label"} refetch={refetch} />
+       <LabelModal  name={"Label"} label={label} title={"Add Label"} refetch={refetch} />
       </div>
     );
 };
