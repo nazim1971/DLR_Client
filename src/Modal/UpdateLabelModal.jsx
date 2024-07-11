@@ -1,15 +1,13 @@
 import { useForm } from "react-hook-form";
 import useAxiosPublic from "../components/Hooks/useAxiosPublic";
 import { imageUpload } from "../components/Hooks/imageUpload";
-import { useContext } from "react";
 import toast from "react-hot-toast";
-import { AuthContext } from "../Auth/AuthProvider";
 import { TbFidgetSpinner } from "react-icons/tb";
+import { useState } from "react";
 
 
 const UpdateLabelModal = ({id,refetch,title,name}) => {
-
-    const {loader, setLoader} = useContext(AuthContext)
+  const [loader,setLoader] = useState(false)
     const axiosPublic = useAxiosPublic();
     const { register, handleSubmit, reset } = useForm();
 
@@ -19,12 +17,15 @@ const UpdateLabelModal = ({id,refetch,title,name}) => {
       const { labelName } = data;
       try {
         let image_url = id?.photoUrl || "";
-      //  if(image !== image_url) setLoader(true)
-        // 1. Upload image and get image url
-       if(image){
-        image_url = await imageUpload(image);
-        setLoader(false)
-       }
+        if(image !== image_url) {
+         setLoader(false)
+        }
+         // 1. Upload image and get image url
+        if(image){
+         setLoader(true)
+         image_url = await imageUpload(image);
+         setLoader(false)
+        }
         
         const labelInfo = {
           labelName,

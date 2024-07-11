@@ -2,14 +2,16 @@ import { useQuery } from "@tanstack/react-query";
 import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import AllLabel from "./AllLabel";
 import LabelModal from "../../../Modal/LabelModal";
+import useAuth from "../../Hooks/useAuth";
 const Labels = () => {
 
   const axiosPublic = useAxiosPublic();
+  const {user} = useAuth()
   //get all label
   const {data: label=[], refetch} = useQuery({
  queryKey: ['allLabel'],
  queryFn: async()=>{
-  const {data} = await axiosPublic('/v1/label/allLabel')
+  const {data} = await axiosPublic(`/v1/label/allLabel/${user?.userEmail}`)
   return data;
   
  }

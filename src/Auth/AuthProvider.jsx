@@ -41,6 +41,7 @@ const logout = async () => {
         const res = await axiosPublic.post("/v1/user/logout", null, { withCredentials: true });
         if (res?.data?.Status === "Success") {
             localStorage.removeItem("user"); // Clear user data from localStorage
+            setUser(null)
             toast.success("Logged out successfully");
         } else {
             toast.error(res?.data?.Status || "Logout failed");
