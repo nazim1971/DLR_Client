@@ -7,7 +7,7 @@ import useAuth from "../../Hooks/useAuth";
 
 
 
-const Artists = () => {
+const ArtistsMain = () => {
 
 
   const axiosPublic = useAxiosPublic();
@@ -63,4 +63,4 @@ const Artists = () => {
     );
 };
 
-export default Artists;
+export default ArtistsMain;

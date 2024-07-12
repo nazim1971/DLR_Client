@@ -1,7 +1,7 @@
 {
   "name": "react-template",
   "private": true,
-  "homepage": "https://cms.darklabrecords.com" ,
+  "homepage": "https://cms.darklabrecords.com",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -29,6 +29,7 @@
     "react-router-dom": "^6.22.3",
     "react-simple-typewriter": "^5.0.1",
     "react-spinners": "^0.14.1",
+    "react-tabs": "^6.0.2",
     "react-toastify": "^10.0.5",
     "react-tooltip": "^5.26.4",
     "sort-by": "^1.2.0",

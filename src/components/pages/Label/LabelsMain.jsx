@@ -3,7 +3,7 @@ import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import AllLabel from "./AllLabel";
 import LabelModal from "../../../Modal/LabelModal";
 import useAuth from "../../Hooks/useAuth";
-const Labels = () => {
+const LabelsMain = () => {
 
   const axiosPublic = useAxiosPublic();
   const {user} = useAuth()
@@ -56,4 +56,4 @@ const Labels = () => {
     );
 };
 
-export default Labels;
+export default LabelsMain;
